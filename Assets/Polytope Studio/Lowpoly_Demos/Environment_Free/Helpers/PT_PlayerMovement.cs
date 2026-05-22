@@ -58,7 +58,7 @@ public class PT_PlayerMovement : MonoBehaviour
 #endif
         // ─────────────────────────────────────────────────────────────────────
 
-        speed = (sprint && isGrounded) ? 10f : 5f;
+        speed = (sprint && isGrounded) ? 10f : 2f;
 
         Vector3 move = transform.right * x + transform.forward * z;
         controller.Move(move * speed * Time.deltaTime);
