@@ -4,6 +4,7 @@ using UnityEngine;
 
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.HighDefinition;
 #endif
 
 public class PT_PlayerMovement : MonoBehaviour
@@ -21,8 +22,18 @@ public class PT_PlayerMovement : MonoBehaviour
     Vector3 velocity;
     bool isGrounded;
 
+    [SerializeField] private AudioClip pasos;
+    private Camera mainCamera;
+
+
+    private void Start()
+    {
+        mainCamera = Camera.main;
+    }
+
     void Update()
     {
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)
