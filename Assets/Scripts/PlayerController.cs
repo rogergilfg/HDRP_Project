@@ -1,7 +1,5 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,6 +7,8 @@ public class PlayerController : MonoBehaviour
     public InputActionReference action;
     private bool pasosRepro;
     [SerializeField] private float iniciarPasos;
+    [SerializeField] private GameObject monster;
+    [SerializeField] private LayerMask enemyLayer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -41,5 +41,19 @@ public class PlayerController : MonoBehaviour
                 pasosRepro = false;
             }
         }
+
+        Ray ray = new(transform.position, Camera.main.transform.forward);
+        RaycastHit hit;
+        Debug.DrawRay(transform.position, Camera.main.transform.forward * 100f, Color.red);
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, enemyLayer))
+        {
+            if (hit.transform.tag == "Enemy")
+            {
+                EnemyController enemy = hit.transform.GetComponent<EnemyController>();
+                enemy.JumpScare();
+            }
+        }
     }
+
+    //UnityEditor.TransformWorldPlacementJSON:{"position":{"x":68.07,"y":4.02,"z":60.58},"rotation":{"x":0.0,"y":0.65,"z":0.0,"w":0.75},"scale":{"x":1.0,"y":1.0,"z":1.0}}
 }
