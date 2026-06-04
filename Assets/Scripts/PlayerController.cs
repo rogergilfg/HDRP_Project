@@ -3,17 +3,20 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
 
+
+    private Animator animator;
     public InputActionReference action;
     private bool pasosRepro;
     [SerializeField] private float iniciarPasos;
     [SerializeField] private GameObject monster;
-    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask pickLayer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -42,11 +45,17 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        Ray ray = new(transform.position, Camera.main.transform.forward);
+        Ray ray = new(Camera.main.transform.position, Camera.main.transform.forward);
         RaycastHit hit;
-        Debug.DrawRay(transform.position, Camera.main.transform.forward * 100f, Color.red);
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, enemyLayer))
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * 100f, Color.red);
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, pickLayer))
         {
+            if(hit.transform.tag == "Nota")
+            {
+                Debug.Log("Nota encontrada");
+                animator.SetTrigger("PickUp");
+            }
+
             if (hit.transform.tag == "Enemy")
             {
                 EnemyController enemy = hit.transform.GetComponent<EnemyController>();

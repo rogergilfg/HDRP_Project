@@ -4,6 +4,7 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] private float jumpScareSpeed;
     private bool isJumpScaring = false;
+    [SerializeField] private Transform player;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -16,7 +17,7 @@ public class EnemyController : MonoBehaviour
     {
         if(isJumpScaring == true)
         {
-            Vector3 direccion = (Camera.main.transform.position - transform.position).normalized;
+            Vector3 direccion = (player.transform.position - transform.position).normalized;
             transform.position += direccion * jumpScareSpeed * Time.deltaTime;
         }
     }
