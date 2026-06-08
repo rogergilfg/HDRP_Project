@@ -26,7 +26,7 @@ public class EnemyController : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            Time.timeScale = 0f;
+            Debug.Log("Player tocado");
         }
             
     }
@@ -35,4 +35,6 @@ public class EnemyController : MonoBehaviour
     {
         isJumpScaring = true;
     }
+
+    
 }
